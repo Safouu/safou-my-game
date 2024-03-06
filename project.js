@@ -56,7 +56,7 @@ class Players {
 const player1 = new Players(`MCA`, 10, canvas.height / 2 - 15, 15, 65, 0, 'green');
 const player2 = new Players(`USMA`, canvas.width - 25, canvas.height / 2 - 15, 15, 65, 0, 'red');
 
-//Players Draw with Players collusion
+
 function drawPlayersAndCollusion() {
     player1.drawPlayer();
     player2.drawPlayer();
@@ -94,7 +94,7 @@ class Ball {
         this.y += this.speedY;
         fans.play();
         
-        // Balle collision avec player1
+        // Balle avec player1
         if (this.x - this.radius < player1.x + player1.width &&
             this.x + this.radius > player1.x &&
             this.y + this.radius > player1.y &&
@@ -102,10 +102,10 @@ class Ball {
             {
                 this.speedX += this.x;
                 collisionSound1.play();
-                this.increaseSpeed(); // Augmenter légèrement la vitesse
+                this.increaseSpeed();
             }
             
-        // Balle collision avec player2
+        // Balle avec player2
         if (this.x - this.radius < player2.x + player2.width &&
             this.x + this.radius > player2.x &&
             this.y + this.radius > player2.y &&
@@ -114,10 +114,10 @@ class Ball {
             {
                 this.speedX = -this.speedX;
                 collisionSound2.play();
-                this.increaseSpeed(); // Augmenter légèrement la vitesse
+                this.increaseSpeed();
             }
 
-        // Balle Collision -  haut - bas
+        // Balle Collision . haut - bas
         if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
             this.speedY = -this.speedY;
         }
@@ -146,24 +146,13 @@ class Ball {
             this.speedX = this.initialSpeedX * 3;
         }
     }
-
-/*     increaseSpeed() {
-        // Augmenter légèrement la vitesse, max 3 fois la vitesse d'origine
-        const increasedSpeedX = this.speedX * 1.2;
-    
-        if (increasedSpeedX <= this.initialSpeedX * 3) {
-            this.speedX = increasedSpeedX;
-        } else {
-            this.speedX = this.initialSpeedX * 3;
-        }
-    } */
     
 
     reset() {
         this.x = canvas.width / 6;
         this.y = canvas.height / 2;
-        this.speedY = this.initialSpeedX; // Réinitialiser la vitesse Y verticale 
-        this.speedX = this.initialSpeedX; // Réinitialiser la vitesse X horizontale 
+        this.speedY = this.initialSpeedX;
+        this.speedX = this.initialSpeedX;
     }
 }
 
@@ -222,7 +211,7 @@ function playersControl() {
 
 /////////////////////// Game over condition ///////////////////////////////////////////////////////////
 function gameOver(){
-    let scoreTest = 1;
+    let scoreTest = 5;
     
     if (player1.score - player2.score >= scoreTest) {
         // Afficher le message de game over
@@ -244,9 +233,7 @@ function gameOver(){
         ball.y = canvas.height/2;
         fans.pause()
     }
-
-        // Arrêter le jeu en arrêtant la boucle de rendu
-        return;
+    return;
         
     }
 
