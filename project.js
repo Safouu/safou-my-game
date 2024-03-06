@@ -35,9 +35,25 @@ class Players {
             this.y = 0;
         }
     }
+
+/*     gameOver(joueur){
+        if (this.score - joueur.score >= 2) {
+            // Afficher le message de game over
+            ctx.font = '30px Arial';
+            ctx.fillText(`The Winner is`, canvas.width/4, 120);
+            ctx.fillStyle = 'gold';
+            ctx.fillText(`${this.name}`, canvas.width/2.5, 160)
+            ball.speedX = 0;
+            ball.speedY = 0;
+            fans.pause()
+        }
+            // Arrêter le jeu en arrêtant la boucle de rendu
+            return;
+            
+        } */
 }
 
-const player1 = new Players(`MCA`, 10, canvas.height / 2 - 15, 15, 65, 0, 'forestgreen');
+const player1 = new Players(`MCA`, 10, canvas.height / 2 - 15, 15, 65, 0, 'green');
 const player2 = new Players(`USMA`, canvas.width - 25, canvas.height / 2 - 15, 15, 65, 0, 'red');
 
 //Players Draw with Players collusion
@@ -49,7 +65,7 @@ function drawPlayers() {
 }
 
 
-///////////////////////////////////////////////// Ball /////////////////////////////////////////////////////
+////////////////////////////////////// Ball ///////////////////////////////////////////////
 
 class Ball {
     constructor(x, y, radius, speedX, speedY, color) {
@@ -123,16 +139,16 @@ class Ball {
     }
 
     increaseSpeed() {
-        // Augmenter légèrement la vitesse, max 4 fois la vitesse d'origine
-        if (this.speedX * 1.2 <= this.initialSpeedX * 4) {
+        // Augmenter légèrement la vitesse, max 3 fois la vitesse d'origine
+        if (this.speedX * 1.2 <= this.initialSpeedX * 3) {
             this.speedX *= 1.2;
         } else {
-            this.speedX = this.initialSpeedX * 4;
+            this.speedX = this.initialSpeedX * 3;
         }
     }
 
 /*     increaseSpeed() {
-        // Augmenter légèrement la vitesse, max 4 fois la vitesse d'origine
+        // Augmenter légèrement la vitesse, max 3 fois la vitesse d'origine
         const increasedSpeedX = this.speedX * 1.2;
     
         if (increasedSpeedX <= this.initialSpeedX * 3) {
@@ -146,18 +162,16 @@ class Ball {
     reset() {
         this.x = canvas.width / 6;
         this.y = canvas.height / 2;
-        this.speedY; // Réinitialiser la vitesse Y verticale 
+        this.speedY = this.initialSpeedX; // Réinitialiser la vitesse Y verticale 
         this.speedX = this.initialSpeedX; // Réinitialiser la vitesse X horizontale 
     }
 }
 
 const ball = new Ball(canvas.width / 2, canvas.height / 2, 8, 2, 2, 'black');
 
-////////Draw Ball ////////
+/////////////// Draw Ball ////////////////////////////////////////
 
-function drawBall(){
-    ball.drawBall()
-}
+ball.drawBall();
 
 
 /////////////////// Draw Score ///////////////////////////////////////////////////////
@@ -169,7 +183,7 @@ function drawScore() {
 }
 
 
-///////////////////////////// Key  Movement ///////////////////////////////////////////////
+///////////////////////////// players Control ///////////////////////////////////////////////
 const keys = {};
 
 document.addEventListener('keydown', function(event) {
@@ -180,7 +194,7 @@ document.addEventListener('keyup', function(event) {
     keys[event.key] = false;
 });
 
-function updatePlayersPosition() {
+function playersControl() {
     // Joueur 1
     if (keys['w']) {
         player1.y -= 5;
@@ -278,11 +292,11 @@ function game() {
 
     drawPlayers();
 
-    drawBall()
+    ball.drawBall();
 
     drawScore();
 
-    updatePlayersPosition()
+    playersControl();
 
 /*     playersCollusion(player1);
     playersCollusion(player2); */
