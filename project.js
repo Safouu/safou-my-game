@@ -57,7 +57,7 @@ const player1 = new Players(`MCA`, 10, canvas.height / 2 - 15, 15, 65, 0, 'green
 const player2 = new Players(`USMA`, canvas.width - 25, canvas.height / 2 - 15, 15, 65, 0, 'red');
 
 //Players Draw with Players collusion
-function drawPlayers() {
+function drawPlayersAndCollusion() {
     player1.drawPlayer();
     player2.drawPlayer();
     player1.playersCollusion();
@@ -107,10 +107,10 @@ class Ball {
             
         // Balle collision avec player2
         if (this.x - this.radius < player2.x + player2.width &&
-                this.x + this.radius > player2.x &&
-                this.y + this.radius > player2.y &&
-                this.y - this.radius < player2.y + player2.height &&
-                this.speedX > 0)
+            this.x + this.radius > player2.x &&
+            this.y + this.radius > player2.y &&
+            this.y - this.radius < player2.y + player2.height &&
+            this.speedX > 0)
             {
                 this.speedX = -this.speedX;
                 collisionSound2.play();
@@ -222,24 +222,26 @@ function playersControl() {
 
 /////////////////////// Game over condition ///////////////////////////////////////////////////////////
 function gameOver(){
-    if (player1.score - player2.score >= 2) {
+    let scoreTest = 1;
+    
+    if (player1.score - player2.score >= scoreTest) {
         // Afficher le message de game over
         ctx.font = '30px Arial';
         ctx.fillText(`The Winner is`, canvas.width/4, 120);
         ctx.fillStyle = 'gold';
         ctx.fillText(`${player1.name}`, canvas.width/2.5, 160)
-        ball.speedX = 0;
-        ball.speedY = 0;
+        ball.x = canvas.width/2;
+        ball.y = canvas.height/2;
         fans.pause()
     }
 
-    if(player2.score - player1.score >= 2) {
+    if(player2.score - player1.score >= scoreTest) {
         ctx.font = '30px Arial';
         ctx.fillText(`The Winner is`, canvas.width/4, 120);
         ctx.fillStyle = 'gold';
         ctx.fillText(`${player2.name}`, canvas.width/2.8, 160)
-        ball.speedX = 0;
-        ball.speedY = 0;
+        ball.x = canvas.width/2;
+        ball.y = canvas.height/2;
         fans.pause()
     }
 
@@ -290,7 +292,7 @@ function game() {
 
     ctx.drawImage(sprite.image, sprite.x, sprite.y, sprite.width, sprite.height);
 
-    drawPlayers();
+    drawPlayersAndCollusion();
 
     ball.drawBall();
 
